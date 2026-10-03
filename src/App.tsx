@@ -1,4 +1,5 @@
 import { Anchors, Close, Company, Downstream, Faq, Method, Platforms, Roles } from './components/Sections'
+import { Capabilities, Categories, Outcomes, PerformanceModel, Problem } from './components/PerformanceSections'
 import { Hero } from './components/Hero'
 import { SiteFooter, SiteHeader } from './components/SiteChrome'
 
@@ -11,15 +12,17 @@ function App() {
       >
         Skip to content
       </a>
-      <div className="bg-navy px-5 py-2.5 text-center text-sm font-medium text-white">
-        AI on AWS, Azure, Google Cloud, and Vyuha. FinOps and AIOps through Curate and Zolix.
-      </div>
       <SiteHeader />
       <main>
         <Hero />
-        <Anchors />
-        <Downstream />
+        <Problem />
+        <Categories />
+        <PerformanceModel />
         <Method />
+        <Outcomes />
+        <Anchors />
+        <Capabilities />
+        <Downstream />
         <Platforms />
         <Roles />
         <Company />
