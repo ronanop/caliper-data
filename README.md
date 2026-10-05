@@ -1,33 +1,57 @@
-# React + TypeScript + Vite
+# Calipers
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+Marketing site for Calipers, built with React, Vite, and Tailwind CSS.
 
-Currently, two official plugins are available:
+## Local development
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
-
-## React Compiler
-
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the Oxlint configuration
-
-If you are developing a production application, we recommend enabling type-aware lint rules by installing `oxlint-tsgolint` and editing `.oxlintrc.json`:
-
-```json
-{
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["react", "typescript", "oxc"],
-  "options": {
-    "typeAware": true
-  },
-  "rules": {
-    "react/rules-of-hooks": "error",
-    "react/only-export-components": ["warn", { "allowConstantExport": true }]
-  }
-}
+```bash
+npm install
+npm run dev        # http://localhost:5173
+npm run build      # production build into dist/
+npm start          # serve dist/ with server.js on http://localhost:3000
 ```
 
-See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.
-"# caliper-data" 
+Requires Node.js `^20.19.0 || >=22.12.0` (Node 22 recommended, see `.nvmrc`).
+
+## Deploying to Hostinger (Node.js Web App)
+
+In hPanel go to **Websites → Add Website → Node.js web app**, then either
+**Import Git repository** (connect GitHub and pick this repo, every push to
+`main` redeploys) or **Upload archive** (run `npm run zip` and upload
+`calipers-hostinger.zip`; it contains the last commit, so commit first).
+
+Hostinger auto-detects the settings from `package.json`. Confirm they match
+one of the options below.
+
+### Option A: static (recommended)
+
+Hostinger builds the site and serves `dist/` directly.
+
+| Field            | Value          |
+| ---------------- | -------------- |
+| Framework preset | `React`        |
+| Node.js version  | `22`           |
+| Root directory   | `/`            |
+| Build command    | `build`        |
+| Output directory | `dist`         |
+| Entry file       | leave empty    |
+
+### Option B: Node server
+
+Runs `server.js`, which serves `dist/` with gzip, cache headers, and a
+`/healthz` endpoint. Use this if you need server-side behaviour later.
+
+| Field            | Value          |
+| ---------------- | -------------- |
+| Framework preset | `Other`        |
+| Node.js version  | `22`           |
+| Root directory   | `/`            |
+| Build command    | `build`        |
+| Output directory | leave empty    |
+| Entry file       | `server.js`    |
+
+`server.js` listens on the `PORT` Hostinger provides. If `dist/` is missing at
+startup it runs the Vite build itself, so the app still boots if the build
+step is skipped.
+
+No environment variables are required.
